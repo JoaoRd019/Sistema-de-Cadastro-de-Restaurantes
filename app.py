@@ -1,6 +1,7 @@
 import os
 
-restaurantes = []
+restaurantes = [{"nome": "MC Donalds", "categoria":"Lanche", "ativo": False},
+                {"nome": "burger king", "categoria":"Lanche", "ativo": True}]
 
 def exibir_nome_do_programa():
     print(""""
@@ -25,15 +26,21 @@ def opcao_invalida():
 def cadastrar_novo_restaurante():
     exibir_subtitulo("Cadastro de novos restaurantes")
     nome_do_restaurante = input("Digite o nome do restaurante que deseja cadastrar: ")
-    restaurantes.append(nome_do_restaurante)
+    categoria_restaurante = input(f"Digite o nome da categoria do restaurante {nome_do_restaurante}: ")
+    dados_restaurantes = {"nome":nome_do_restaurante, "categoria":categoria_restaurante, "ativo":False}
+    restaurantes.append(dados_restaurantes)
     print(f"O restaurante {nome_do_restaurante} foi cadastrado com sucesso")
     voltar_ao_menu_principal()
 
 def listar_restaurantes():
     exibir_subtitulo("Listando restaurantes")
     
+    print(f"{"Nome restaurante".ljust(15)} | {"Categoria".ljust(15)} | {"Status".ljust(15)}")
     for i in restaurantes:
-         print(f".{i}")
+        nome_restaurante = i["nome"]
+        categoria = i["categoria"]
+        ativo = "Ativado"if i["ativo"] else "Desativado"
+        print(f"- {nome_restaurante.ljust(15)}| {categoria.ljust(15)} | {ativo}")
 
     voltar_ao_menu_principal()
 
@@ -43,14 +50,29 @@ def voltar_ao_menu_principal():
     main()
      
 def exibir_subtitulo(texto):
-     os.system("cls")
-     print(texto,"\n")
+    os.system("cls")
+    linha = "▫️" * len(texto)
+    print(linha)
+    print(texto,"")
+    print(linha,"\n")
 
 
-def ativar_restaurantes():
-     pass
+def status_restaurantes():
+    exibir_subtitulo("Alterando status do restaurante")
+    nome_restaurante = input("Digite o nome do restaurante que deseja alterar status: ATIVO/DESATIVADO: ")
+    restaurante_encontrado = False
+    for i in restaurantes:
+        if nome_restaurante == i["nome"]:
+            restaurante_encontrado = True
+            i["ativo"] = not i["ativo"]
+            mensagem = f"O restaurante {nome_restaurante} foi ativado com suscesso" if i["ativo"] else f"O restaurante {nome_restaurante} foi desativado com suscesso"
+            print(mensagem)
+        if not restaurante_encontrado:
+             print("O restaurante nao foi encontrado")
+    
+    
+    voltar_ao_menu_principal()
 
-     
 def escolher_opcao():
     try:  
         opcao_escolhida = int(input("Escolha uma opçao: "))
@@ -60,7 +82,7 @@ def escolher_opcao():
         elif opcao_escolhida == 2:
                 listar_restaurantes()
         elif opcao_escolhida == 3:
-                ativar_restaurantes()
+                status_restaurantes()
         elif opcao_escolhida == 4:
                 finalizar_app()
         else:
