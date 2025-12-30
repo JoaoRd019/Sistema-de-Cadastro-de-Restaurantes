@@ -41,7 +41,7 @@ def listar_restaurantes():
     """Lista os restaurantes presentes na lista """
     exibir_subtitulo("Listando restaurantes")
     
-    print(f"{"Nome restaurante".ljust(15)} | {"Categoria".ljust(15)} | {"Status".ljust(15)}")
+    print(f"{"Nome restaurante".ljust(15)} | {"Categoria".ljust(15)} | {"Status"}")
     for i in restaurantes:
         nome_restaurante = i["nome"]
         categoria = i["categoria"]
@@ -74,9 +74,9 @@ def status_restaurantes():
         if nome_restaurante == i["nome"]:
             restaurante_encontrado = True
             i["ativo"] = not i["ativo"]
-            mensagem = f"O restaurante {nome_restaurante} foi ativado com suscesso" if i["ativo"] else f"O restaurante {nome_restaurante} foi desativado com suscesso"
+            mensagem = f"O restaurante {nome_restaurante} foi ativado com sucesso" if i["ativo"] else f"O restaurante {nome_restaurante} foi desativado com suscesso"
             print(mensagem)
-        if not restaurante_encontrado:
+    if not restaurante_encontrado:
              print("O restaurante nao foi encontrado")
     
     
